@@ -28,33 +28,26 @@
     </div>
 
     <script>
-        // Function to get current date and time
-        function getCurrentDateTime() {
+function getCurrentDateTime() {
             var currentDateTime = new Date();
-            return currentDateTime.toLocaleString();  // Formats date and time as a string
+            return currentDateTime.toLocaleString(); 
         }
+        
+        $('#current-date-time').text(getCurrentDateTime());
 
-        // Insert current date and time into the footnote
-        document.getElementById('current-date-time').textContent = getCurrentDateTime();
 
-        // Example news headlines (hardcoded)
         const newsHeadlines = [
             "New AI breakthrough in healthcare industry.",
             "Global markets rebound after initial slump.",
             "Climate summit 2024 sees new policies introduced."
         ];
 
-        // Function to display news headlines in the footnote
         function displayNews() {
-            const newsList = document.getElementById('news-list');
-            newsHeadlines.forEach(function(news) {
-                var listItem = document.createElement('li');
-                listItem.textContent = news;
-                newsList.appendChild(listItem);
+            const newsList = $('#news-list');
+                newsHeadlines.forEach(function(news) {
+                $('<li></li>').text(news).appendTo(newsList);
             });
         }
-
-        // Call the displayNews function to show news
         displayNews();
 
         // Initialize Bigfoot plugin
