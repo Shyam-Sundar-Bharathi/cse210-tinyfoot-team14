@@ -102,3 +102,6 @@ Yes, I would consider using Littlefoot.js for projects that require lightweight,
 ### Overall Assessment
 
 Littlefoot.js is a well-structured and lightweight library suitable for projects with basic footnote management needs. However, it falls short in terms of performance scalability, customization, and modern framework compatibility. With some enhancements, it could become a more versatile solution for complex use cases.
+
+### Demo
+https://shyam-sundar-bharathi.github.io/cse210-littlefoot-team14/
