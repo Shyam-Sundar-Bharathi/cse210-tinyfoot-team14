@@ -69,3 +69,7 @@ Bigfoot.js uses **Grunt** as its build tool, which is outdated compared to moder
 ## Conclusion
 While Bigfoot.js offers useful functionality for handling complex footnotes, its reliance on outdated technologies like jQuery and CoffeeScript, combined with a lack of modularity and test coverage, makes it difficult to maintain or scale. For long-term projects or more complex implementations, it might be better to refactor the code or consider building a new solution from scratch.
 
+## Demo
+https://shyam-sundar-bharathi.github.io/cse210-bigfoot-team14/
+
+
