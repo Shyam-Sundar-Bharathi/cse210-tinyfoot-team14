@@ -1,4 +1,3 @@
-
 # ADR05: Migrating jQuery to JS ES6 and Eliminating CoffeeScript Dependency
 
 ## Context and Problem Statement
@@ -12,7 +11,7 @@ Given that **Bigfoot.js** is a relatively simple tool for footnotes, it doesn’
 - **Simplicity**: The project primarily handles footnotes, which is a simple use case that doesn’t warrant the overhead of jQuery and CoffeeScript.
 - **Maintainability**: Using native ES6 JavaScript will modernize the codebase and eliminate the need for transpilers or dependencies.
 - **Performance**: Removing jQuery will reduce unnecessary overhead, as modern JavaScript can handle DOM manipulation more efficiently.
-- **Future Scalability**: Moving to ES6 allows for easier modularization (as per ADR02) and ensures the project can scale without relying on outdated tools or frameworks.
+- **Future Scalability**: Moving to ES6 allows for easier modularization (as per [ADR02](https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14/issues/2)) and ensures the project can scale without relying on outdated tools or frameworks.
 
 ## Considered Options
 
@@ -35,7 +34,7 @@ Given that **Bigfoot.js** is a relatively simple tool for footnotes, it doesn’
 - **Simplicity**: We only need an HTML file, a CSS file, and a JS file for this footnote system—no tooling or extra dependencies required.
 - **Improved maintainability**: ES6+ JavaScript is now standard, making it easier for future developers to understand and maintain the code.
 - **Better performance**: Removing jQuery reduces the size of the codebase and improves load times, especially on smaller devices or slower connections.
-- **Future scalability**: The ES6 modular structure makes it easier to expand or modify Tinyfoot without major refactoring later on (as outlined in ADR02).
+- **Future scalability**: The ES6 modular structure makes it easier to expand or modify Tinyfoot without major refactoring later on (as outlined in [ADR02](https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14/issues/2)).
 
 **Cons**:
 - **Initial refactoring time**: Migrating away from jQuery and CoffeeScript will require rewriting parts of the codebase.
@@ -61,7 +60,7 @@ This decision will modernize the codebase by refactoring it to native ES6+ JavaS
 - **Positive**: 
   - **Simplified codebase**: The new structure will have only HTML, CSS, and JS files—making it leaner, easier to understand, and more maintainable.
   - **Improved performance**: By eliminating jQuery, we reduce the size of the JavaScript file and streamline the way we interact with the DOM, which will lead to faster load times, particularly on mobile devices or slower networks.
-  - **Future-proofing**: With ES6 standards in place, future development (such as modularizing the code as per ADR02) will be much easier and follow best practices for modern web development.
+  - **Future-proofing**: With ES6 standards in place, future development (such as modularizing the code as per [ADR02](https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14/issues/2)) will be much easier and follow best practices for modern web development.
 
 - **Negative**: 
   - **Initial refactoring cost**: Time and effort will be needed to refactor the existing codebase, but the long-term benefits of maintainability outweigh this initial cost.
@@ -71,4 +70,4 @@ This decision will modernize the codebase by refactoring it to native ES6+ JavaS
 The success of this migration will be confirmed through:
 - **Code review**: Ensure the refactored ES6 code maintains the same functionality as the original jQuery/CoffeeScript implementation.
 - **Performance testing**: Compare the load times and overall performance before and after the migration, particularly on content-heavy pages with multiple footnotes.
-- **Maintainability**: As we modularize the code in the future (ADR02), ensure that the structure remains clean and that the migration has made it easier to extend TinyFoot without introducing technical debt.
+- **Maintainability**: As we modularize the code in the future ([ADR02](https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14/issues/2)), ensure that the structure remains clean and that the migration has made it easier to extend TinyFoot without introducing technical debt.
