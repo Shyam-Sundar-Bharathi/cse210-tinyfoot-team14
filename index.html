@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Page Title</title>
     <script src="https://code.jquery.com/jquery-2.0.0.min.js"></script>
-    <script src="dist/bigfoot.min.js"></script>
+    <script src="src/js/bigfoot.js"></script>
     <link rel = "stylesheet" href="dist/bigfoot-default.css">
 </head>
 <body>
@@ -28,7 +28,7 @@
     </div>
 
     <script>
-function getCurrentDateTime() {
+        function getCurrentDateTime() {
             var currentDateTime = new Date();
             return currentDateTime.toLocaleString(); 
         }
@@ -51,11 +51,9 @@ function getCurrentDateTime() {
         displayNews();
 
         // Initialize Bigfoot plugin
-        $.bigfoot(
-            {
-                animationDuration: 3000,
-            }
-        );
+        bigfoot({
+            animationDuration: 3000,
+        });
     </script>
 </body>
 </html>
