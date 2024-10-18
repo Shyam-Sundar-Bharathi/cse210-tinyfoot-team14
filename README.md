@@ -41,7 +41,7 @@ To start using TinyFoot, simply include the following files in your project:
     </div>
   </div>
 
-  <script src="dist/tinyfoot.js"></script>
+  <script src="tinyfoot.js"></script>
 </body>
 </html>
 ```
