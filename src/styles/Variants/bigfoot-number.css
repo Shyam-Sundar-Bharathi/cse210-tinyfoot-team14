@@ -1,0 +1,45 @@
+/* A button that has no ellipse, but instead shows the footnote's number on the
+   page. Note that the number will be reset to 1 depending on the selector passed
+   to bigfoot's `numberResetSelector` option.
+   @author Rashi Bhansali
+*/
+
+.bigfoot-footnote__button {
+    position: relative;
+    height: var(--button-height); /* Assuming $button-height is defined as a CSS variable */
+    width: 1.5em;
+    border-radius: calc(var(--button-height) / 2); /* Assuming $button-height is defined as a CSS variable */
+  
+  }
+  
+  .bigfoot-footnote__button:after {
+    /* CONTENT */
+    content: attr(data-footnote-number);
+  
+    /* POSITION */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
+    /* DISPLAY AND SIZING */
+    display: block;
+  
+    /* TEXT */
+    font-size: calc(var(--button-height) * 0.6); /* Assuming $button-height is defined as a CSS variable */
+    font-weight: bold;
+    color: rgba(var(--button-color), 0.5); /* Assuming $button-color is defined as a CSS variable */
+  
+    /* TRANSITIONS */
+    transition: color var(--popover-transition-default-duration) var(--popover-transition-default-timing-function); /* Assuming transition values are defined as CSS variables */
+  }
+  
+  .bigfoot-footnote__button:hover:after,
+  .bigfoot-footnote__button.is-active:after {
+    color: white;
+  }
+  
+  .bigfoot-footnote__button__circle {
+    display: none;
+  }
+  

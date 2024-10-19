@@ -1,3 +1,11 @@
+/*
+// The button that activates the footnote. By default, this will appear as a
+// flat button that has an ellipse contained inside of it.
+
+// @state .is-active            - The associated popover has been activated and is visible.
+// @author Rashi Bhansali
+*/
+
 .bigfoot-footnote__button {
     position: relative;
     z-index: 5;
@@ -41,7 +49,6 @@
     width: 0.25em;
     height: 0.25em;
     margin-right: 0.25em;
-    float: left;
 }
 .bigfoot-footnote__button__circle:last-child {
     margin-right: 0;
@@ -51,6 +58,8 @@
     position: relative;
     text-indent: 0;
 }
+
+/* Styles to restore the original footnote numbers and texts when the page is printed */
 @media not print {
     .footnote-print-only {
         display: none !important;
@@ -61,6 +70,24 @@
         display: none !important;
    }
 }
+
+/*
+// The popover for the footnote. This popover will be, by default, be sized and positioned
+// by the script. However, many of the sizes can be established in this stylesheet and
+// will be respected by the script. `max-width` will limit the width of the popover
+// relative to the viewport. `width` (on `bigfoot-footnote__wrapper`) will set the
+// absolute max width. Max height can be set via a `max-height` property
+// on `bigfoot-footnote__content`.
+
+// By default, the popover has a light gray background, a shadow for some depth,
+// rounded corners, and a tooltip pointing to the footnote button.
+
+// @state .is-active            - The popover has been activated and is visible.
+// @state .is-positioned-top    - The popover is above the button.
+// @state .is-positioned-bottom - The popover is below the button.
+// @state .is-scrollable        - The popover content is greater than the popover height.
+// @state .is-fully-scrolled    - The popover content is scrolled to the bottom. */
+
 .bigfoot-footnote {
     position: absolute;
     z-index: 10;
