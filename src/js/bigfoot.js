@@ -1,5 +1,6 @@
 (function() {
     const bigfoot = (options) => {
+
         const defaults = {
           actionOriginalFN: "hide",
           activateCallback: () => {},
@@ -204,33 +205,574 @@
         
             return footnoteHTML.replace(regex, "").replace("[]", "");
         };
-      
+
+        /************ EVENT HANDLERS *************/
+
+        const buttonHover = (event) => {
+            if (settings.activateOnHover) {
+                const buttonHovered = event.target.closest(".bigfoot-footnote__button");
+                const dataIdentifier = `[data-footnote-identifier='${buttonHovered.getAttribute("data-footnote-identifier")}']`;
+                
+                if (buttonHovered.classList.contains("is-active")) {
+                    return;
+                }
+                
+                buttonHovered.classList.add("is-hover-instantiated");
+                
+                if (!settings.allowMultipleFN) {
+                    const otherPopoverSelector = `.bigfoot-footnote:not(${dataIdentifier})`;
+                    removePopovers(otherPopoverSelector);
+                }
+                
+                createPopover(`.bigfoot-footnote__button${dataIdentifier}`).classList.add("is-hover-instantiated");
+            }
+        };
+        
+
+        const touchClick = (event) => {
+            const target = event.target;
+            const nearButton = target.closest(".bigfoot-footnote__button");
+            const nearFootnote = target.closest(".bigfoot-footnote");
+        
+            if (nearButton) {
+                event.preventDefault();
+                clickButton(nearButton);
+            } else if (!nearFootnote) {
+                if (document.querySelector(".bigfoot-footnote")) {
+                    removePopovers();
+                }
+            }
+        };
+        
+        const clickButton = function(button) {
+            console.log('inside click button');
+            let dataIdentifier;
+            button.blur();
+            dataIdentifier = `data-footnote-identifier='${button.getAttribute("data-footnote-identifier")}'`;
+        
+            if (button.classList.contains("changing")) {
+                return;
+            } else if (!button.classList.contains("is-active")) {
+                button.classList.add("changing");
+                setTimeout(function() {
+                    button.classList.remove("changing");
+                }, settings.popoverCreateDelay);
+        
+                createPopover(`.bigfoot-footnote__button[${dataIdentifier}]`);
+                button.classList.add("is-click-instantiated");
+        
+                if (!settings.allowMultipleFN) {
+                    removePopovers(`.bigfoot-footnote:not([${dataIdentifier}])`);
+                }
+            } 
+            else {
+                if (!settings.allowMultipleFN) {
+                    removePopovers();
+                } else {
+                    removePopovers(`.bigfoot-footnote[${dataIdentifier}]`);
+                }
+            }
+        };
+
+        const escapeKeypress = function(event) {
+            if (event.keyCode === 27) {
+              return removePopovers();
+            }
+        };
+        
+        const unhoverFeet = (e) => {
+            if (settings.deleteOnUnhover && settings.activateOnHover) {
+                return setTimeout(() => {
+                    const target = e.target.closest(".bigfoot-footnote, .bigfoot-footnote__button");
+                    if (!document.querySelector(".bigfoot-footnote__button:hover, .bigfoot-footnote:hover")) {
+                        return removePopovers();
+                    }
+                }, settings.hoverDelay);
+            }
+        };
+        
+
+        const bindScrollHandler = function() {
+            if (!settings.preventPageScroll) {
+              return this;
+            }
+            
+            this.addEventListener("DOMMouseScroll", function(event) { scrollHandler(event, this); });
+            this.addEventListener("mousewheel", function(event) { scrollHandler(event, this); });
+          
+            return this;
+        };
+
+        const scrollHandler = function(event, el) {
+            let popover = el.closest(".bigfoot-footnote");
+            let scrollTop = el.scrollTop;
+            let scrollHeight = el.scrollHeight;
+            let height = parseInt(getComputedStyle(el).height);
+            
+            if (scrollTop > 0 && scrollTop < 10) {
+              popover.classList.add("is-scrollable");
+            }
+            
+            if (!popover.classList.contains("is-scrollable")) {
+              return;
+            }
+          
+            let delta = event.type === "DOMMouseScroll" ? event.detail * -40 : event.wheelDelta;
+            let up = delta > 0;
+          
+            const prevent = function() {
+              event.stopPropagation();
+              event.preventDefault();
+              return false;
+            };
+          
+            if (!up && -delta > scrollHeight - height - scrollTop) {
+              el.scrollTop = scrollHeight;
+              popover.classList.add("is-fully-scrolled");
+              return prevent();
+            } else if (up && delta > scrollTop) {
+              el.scrollTop = 0;
+              popover.classList.remove("is-fully-scrolled");
+              return prevent();
+            } else {
+              popover.classList.remove("is-fully-scrolled");
+            }
+        };
+
+        const repositionFeet = function(e) {
+            if (settings.positionContent) {
+                let type = e ? e.type : "resize";
+        
+                document.querySelectorAll(".bigfoot-footnote").forEach(footnote => {
+                    // Retrieve dimensions and positioning details
+                    let identifier = footnote.getAttribute("data-footnote-identifier");
+                    let contentWrapper = footnote.querySelector(".bigfoot-footnote__content");
+                    let button = document.querySelector(`.bigfoot-footnote__button[data-footnote-identifier='${identifier}']`);
+                    let roomLeft = roomCalc(button);
+                    let marginSize = parseFloat(getComputedStyle(footnote).marginTop);
+                    let maxHeightInCSS = parseFloat(footnote.getAttribute("data-bigfoot-max-height"));
+                    let totalHeight = 2 * marginSize + footnote.offsetHeight;
+                    let maxHeightOnScreen = 10000;
+        
+                    // Determine position (top or bottom)
+                    let positionOnTop = roomLeft.bottomRoom < totalHeight && roomLeft.topRoom > roomLeft.bottomRoom;
+                    let lastState = popoverStates[identifier];
+                    console.log('pos on top:',positionOnTop);
+                    console.log('lastState',lastState);
+                    // Update classes and max heights
+                    if (positionOnTop) {
+                        if (lastState !== "top") {
+                            popoverStates[identifier] = "top";
+                            footnote.classList.add("is-positioned-top");
+                            footnote.classList.remove("is-positioned-bottom");
+                            footnote.style.transformOrigin = `${roomLeft.leftRelative * 100}% 100%`;
+                        }
+                        maxHeightOnScreen = roomLeft.topRoom - marginSize - 15;
+                    } else {
+                        if (lastState !== "bottom" || lastState === "init") {
+                            popoverStates[identifier] = "bottom";
+                            footnote.classList.remove("is-positioned-top");
+                            footnote.classList.add("is-positioned-bottom");
+                            footnote.style.transformOrigin = `${roomLeft.leftRelative * 100}% 0%`;
+                        }
+                        maxHeightOnScreen = roomLeft.bottomRoom - marginSize - 15;
+                    }
+        
+                    contentWrapper.style.maxHeight = `${Math.min(maxHeightOnScreen, maxHeightInCSS)}px`;
+                    thisElement = footnote;
+                    // Resize handling
+                    if (type === "resize") {
+                        // Get maxWidthInCSS from the data attribute "bigfoot-max-width"
+                        const maxWidthInCSS = parseFloat(thisElement.getAttribute("bigfoot-max-width"));
+                        
+                        // Select the main wrapper for the footnote
+                        const mainWrap = thisElement.querySelector(".bigfoot-footnote__wrapper");
+                      
+                        // Set maxWidth initially based on the CSS value
+                        let maxWidth = maxWidthInCSS;
+                      
+                        // If the maxWidth is defined as a relative value (<= 1)
+                        if (maxWidthInCSS <= 1) {
+                          const relativeToWidth = (function() {
+                            let userSpecifiedRelativeElWidth = 10000;
+                            
+                            // Check if settings specify an element to calculate the relative width against
+                            if (settings.maxWidthRelativeTo) {
+                              const relativeElement = document.querySelector(settings.maxWidthRelativeTo);
+                              if (relativeElement) {
+                                userSpecifiedRelativeElWidth = relativeElement.offsetWidth;
+                              }
+                            }
+                      
+                            // Use the minimum width between the window's inner width and the relative element width
+                            return Math.min(window.innerWidth, userSpecifiedRelativeElWidth);
+                          })();
+                      
+                          // Calculate maxWidth based on relative width
+                          maxWidth = relativeToWidth * maxWidthInCSS;
+                        }
+                      
+                        // Ensure maxWidth doesn't exceed the content width plus 1
+                        const contentElement = thisElement.querySelector(".bigfoot-footnote__content");
+                        console.log(contentElement.style);
+                        maxWidth = Math.min(maxWidth, contentElement.offsetWidth + 1);
+                      
+                        // Set the max-width of the main wrapper
+                        mainWrap.style.maxWidth = `${maxWidth}px`;
+                      
+                        // Calculate the left position and set it
+                        const buttonMarginLeft = parseFloat(window.getComputedStyle(button).marginLeft);
+                        const buttonOuterWidth = button.offsetWidth;
+                        thisElement.style.left = `${(-roomLeft.leftRelative * maxWidth + buttonMarginLeft + buttonOuterWidth / 2)}px`;
+                      
+                        // Call positionTooltip with the current element and leftRelative value
+                        positionTooltip(thisElement, roomLeft.leftRelative);
+                      }
+                      
+        
+                    // Scroll handling
+                    if (footnote.offsetHeight < contentWrapper.scrollHeight) {
+                        footnote.classList.add("is-scrollable");
+                    }
+                });
+            }
+        };
+
+        /************ AUXILLIARY FUNCTIONS *************/
+
+        const calculatePixelDimension = function(dim, el) {
+            if (dim === "none") {
+              dim = 10000; // Very large value for "none"
+            } else if (dim.includes("rem")) {
+              dim = parseFloat(dim) * baseFontSize();
+            } else if (dim.includes("em")) {
+              dim = parseFloat(dim) * parseFloat(getComputedStyle(el).fontSize);
+            } else if (dim.includes("px")) {
+              dim = parseFloat(dim);
+              if (dim <= 60) {
+                dim = dim / parseFloat(getComputedStyle(el.parentNode).width);
+              }
+            } else if (dim.includes("%")) {
+              dim = parseFloat(dim) / 100;
+            }
+            
+            return dim;
+        };
+
+        const baseFontSize = () => {
+            const el = document.createElement("div");
+            el.style.cssText = "display:inline-block;padding:0;line-height:1;position:absolute;visibility:hidden;font-size:1em;";
+            el.appendChild(document.createElement("M"));
+            document.body.appendChild(el);
+            
+            const size = el.offsetHeight;
+            document.body.removeChild(el);
+            
+            return size;
+          };
+          
+
+        const addBreakpoint = (size, trueCallback, falseCallback, deleteDelay = settings.popoverDeleteDelay, removeOpen = true) => {
+            let mql, minMax, s, query;
+            
+            if (typeof size === "string") {
+                s = size.toLowerCase() === "iphone" ? "<320px" : size.toLowerCase() === "ipad" ? "<768px" : size;
+                minMax = s.charAt(0) === ">" ? "min" : s.charAt(0) === "<" ? "max" : null;
+                query = minMax ? `(${minMax}-width: ${s.substring(1)})` : s;
+                mql = window.matchMedia(query);
+            } else {
+                mql = size;
+            }
+        
+            if (mql.media && mql.media === "invalid") {
+                return {
+                    added: false,
+                    mq: mql,
+                    listener: null
+                };
+            }
+        
+            const trueDefaultPositionSetting = minMax === "min";
+            const falseDefaultPositionSetting = minMax === "max";
+        
+            trueCallback = trueCallback || makeDefaultCallbacks(removeOpen, deleteDelay, trueDefaultPositionSetting, ($popover) => {
+                $popover.classList.add("is-bottom-fixed");
+            });
+        
+            falseCallback = falseCallback || makeDefaultCallbacks(removeOpen, deleteDelay, falseDefaultPositionSetting, () => {});
+        
+            const mqListener = (mq) => {
+                if (mq.matches) {
+                    trueCallback(removeOpen, bigfoot);
+                } else {
+                    falseCallback(removeOpen, bigfoot);
+                }
+            };
+        
+            mql.addEventListener('change', mqListener);
+            mqListener(mql);
+        
+            settings.breakpoints[size] = {
+                added: true,
+                mq: mql,
+                listener: mqListener
+            };
+        
+            return settings.breakpoints[size];
+        };
+        
+        const makeDefaultCallbacks = (removeOpen, deleteDelay, position, callback) => {
+            return (removeOpen, bigfoot) => {
+              let closedPopovers;
+          
+              if (removeOpen) {
+                closedPopovers = bigfoot.close();
+                bigfoot.updateSetting("activateCallback", callback);
+              }
+          
+              setTimeout(() => {
+                bigfoot.updateSetting("positionContent", position);
+                if (removeOpen) {
+                  bigfoot.activate(closedPopovers);
+                }
+              }, deleteDelay);
+            };
+        };
+        
+        const removeBreakpoint = (target, callback) => {
+            let mqFound = false;
+            let b;
+            
+            if (typeof target === "string") {
+              mqFound = settings.breakpoints[target] !== undefined;
+            } else {
+              for (b in settings.breakpoints) {
+                if (settings.breakpoints.hasOwnProperty(b) && settings.breakpoints[b].mq === target) {
+                  mqFound = true;
+                  break; // Stop the loop when the target is found
+                }
+              }
+            }
+          
+            if (mqFound) {
+              const breakpoint = settings.breakpoints[b || target];
+              const listener = callback || breakpoint.listener;
+          
+              listener({ matches: false });
+              breakpoint.mq.removeEventListener('change', breakpoint.listener);
+              delete settings.breakpoints[b || target];
+            }
+          
+            return mqFound;
+          };
+          
+        const getSetting = (setting) => {
+            return settings[setting];
+        };
+        
+        const updateSetting = (newSettings, value) => {
+            let oldValue;
+          
+            if (typeof newSettings === "string") {
+              oldValue = settings[newSettings];
+              settings[newSettings] = value;
+            } else {
+              oldValue = {};
+              for (const prop in newSettings) {
+                if (newSettings.hasOwnProperty(prop)) {
+                  oldValue[prop] = settings[prop];
+                  settings[prop] = newSettings[prop];
+                }
+              }
+            }
+          
+            return oldValue;
+          };
+          
+          
+
+        const positionTooltip = function(popover, leftRelative = 0.5) {
+            const tooltip = popover.querySelector(".bigfoot-footnote__tooltip");
+            if (tooltip) {
+                tooltip.style.left = `${leftRelative * 100}%`;
+            }
+        };
+        
+
+        const roomCalc = function(el) {
+            let elStyles = getComputedStyle(el);
+            let elLeftMargin = parseFloat(elStyles.marginLeft);
+            let elWidth = el.offsetWidth - elLeftMargin;
+            let elHeight = el.offsetHeight;
+        
+            let rect = el.getBoundingClientRect();
+            let w = viewportDetails();
+        
+            let topRoom = rect.top + elHeight / 2;
+            let leftRoom = rect.left + elWidth / 2;
+        
+            return {
+                topRoom: topRoom,
+                bottomRoom: w.height - topRoom,
+                leftRoom: leftRoom,
+                rightRoom: w.width - leftRoom,
+                leftRelative: leftRoom / w.width,
+                topRelative: topRoom / w.height
+            };
+        };
+
+        const viewportDetails = function() {
+            return {
+              width: window.innerWidth,
+              height: window.innerHeight,
+              scrollX: window.pageXOffset || document.documentElement.scrollLeft,
+              scrollY: window.pageYOffset || document.documentElement.scrollTop
+            };
+          };    
+        
+
+        /************ CREATING AND REMOVING POPOVERS *************/
+
+        const createPopover = function(selector) {
+            let buttons, popoversCreated = [];
+        
+            // Determine button elements based on selector and settings
+            if (typeof selector !== "string" && settings.allowMultipleFN) {
+                buttons = selector;
+            } else if (typeof selector !== "string") {
+                buttons = [selector[0]]; // Convert first element to array
+            } else if (settings.allowMultipleFN) {
+                buttons = document.querySelectorAll(selector);
+            } else {
+                buttons = [document.querySelector(selector).closest(".bigfoot-footnote__button")];
+            }
+            
+            // Process each button
+            buttons.forEach((button) => {
+                let content, contentContainer;
+                
+                try {
+                    content = settings.contentMarkup
+                        .replace(/\{\{FOOTNOTENUM\}\}/g, button.getAttribute("data-footnote-number"))
+                        .replace(/\{\{FOOTNOTEID\}\}/g, button.getAttribute("data-footnote-identifier"))
+                        .replace(/\{\{FOOTNOTECONTENT\}\}/g, button.getAttribute("data-bigfoot-footnote"))
+                        .replace(/\&gtsym\;/g, "&gt;")
+                        .replace(/\&ltsym\;/g, "&lt;");
+                    
+                    content = replaceWithReferenceAttributes(content, "BUTTON", button);
+                    console.log(content);
+                } finally {
+                    // Create and configure the content element
+                    const range = document.createRange();
+                    const contentElement = range.createContextualFragment(content).firstElementChild; 
+                    //content has "<aside>...</aside>"; contextual fragment creates a fragment out of the content string and firstelement generates ref to the actual element
+                    //this method avoids creating a <div> and then adding content to its innerHTML
+                    console.log(contentElement);
+                    try {
+                        settings.activateCallback(contentElement, button);
+                    } catch (error) { console.log('hello')}
+        
+                    // Insert the contentElement after the button
+                    button.insertAdjacentElement('afterend', contentElement);
+                    popoverStates[button.getAttribute("data-footnote-identifier")] = "init";
+                    console.log(popoverStates);
+                    const maxWidth = calculatePixelDimension(getComputedStyle(contentElement).maxWidth, contentElement);
+                    contentElement.setAttribute("bigfoot-max-width", maxWidth);
+                    contentElement.style.maxWidth = "10000px"; // Set large max-width for animation
+                    contentElement.style.transitionDuration = settings.animationDuration + "ms";
+        
+                    // Configure the content container
+                    contentContainer = contentElement.querySelector(".bigfoot-footnote__content");
+                    const maxHeight = calculatePixelDimension(getComputedStyle(contentContainer).maxHeight, contentContainer);
+                    contentElement.setAttribute("data-bigfoot-max-height", maxHeight);
+        
+                    repositionFeet();
+                    button.classList.add("is-active");
+                    
+                    // Bind scroll handler to content container
+                    bindScrollHandler.call(contentContainer);
+        
+                    // Track created popovers
+                    popoversCreated.push(contentElement);
+                }
+            });
+            setTimeout(() => {
+                popoversCreated.forEach(popover => { popover.classList.add("is-active") });
+            }, settings.popoverCreateDelay);
+            return popoversCreated;
+        }
+
+        const removePopovers = (footnotes = ".bigfoot-footnote", timeout = settings.popoverDeleteDelay) => {
+            let buttonsClosed = [];
+            
+            const footnoteElements = document.querySelectorAll(footnotes);
+            footnoteElements.forEach(footnote => {
+                const footnoteID = footnote.getAttribute("data-footnote-identifier");
+                const linkedButton = document.querySelector(`.bigfoot-footnote__button[data-footnote-identifier='${footnoteID}']`);
+        
+                if (!linkedButton.classList.contains("changing")) {
+                    buttonsClosed.push(linkedButton);
+                    linkedButton.classList.remove("is-active", "is-hover-instantiated", "is-click-instantiated");
+                    linkedButton.classList.add("changing");
+        
+                    footnote.classList.remove("is-active");
+                    footnote.classList.add("disapearing");
+        
+                    setTimeout(() => {
+                        footnote.remove();
+                        delete popoverStates[footnoteID];
+                        linkedButton.classList.remove("changing");
+                    }, timeout);
+                }
+            });
+        
+            return buttonsClosed;
+        };        
+
+        
+        /************ MAPPING EVENT LISTENERS TO EVENT HANDLERS *************/
+
         const addEventListeners = () => {
-            document.addEventListener('mouseenter', buttonHover, true);
-            document.addEventListener('touchend', touchClick);
-            document.addEventListener('mouseout', unhoverFeet);
-            document.addEventListener('keyup', escapeKeypress);
-            window.addEventListener('scroll', repositionFeet);
-            window.addEventListener('resize', repositionFeet);
-            document.addEventListener('gestureend', repositionFeet);
+            document.addEventListener("mouseenter", (event) => {
+                if (event.target.matches(".bigfoot-footnote__button")) {
+                  buttonHover(event);
+                }
+              });
+            
+              document.addEventListener("touchend", touchClick);
+              document.addEventListener("click", touchClick);
+            
+              document.addEventListener("mouseout", (event) => {
+                if (event.target.classList.contains("is-hover-instantiated")) {
+                  unhoverFeet(event);
+                }
+              });
+            
+              document.addEventListener("keyup", escapeKeypress);
+              window.addEventListener("scroll", repositionFeet);
+              window.addEventListener("resize", repositionFeet);
+            
+              window.addEventListener("gestureend", () => {
+                repositionFeet();
+              });
         };
       
         document.addEventListener('DOMContentLoaded', () => {
             footnoteInit();
-        //   addEventListeners();
+            addEventListeners();
         });
       
         return {
-        //   removePopovers,
-        //   close: removePopovers,
-        //   createPopover,
-        //   activate: createPopover,
-        //   repositionFeet,
-        //   reposition: repositionFeet,
-        //   addBreakpoint,
-        //   removeBreakpoint,
-        //   getSetting,
-        //   updateSetting
+            removePopovers: removePopovers,
+            close: removePopovers,
+            createPopover: createPopover,
+            activate: createPopover,
+            repositionFeet: repositionFeet,
+            reposition: repositionFeet,
+            addBreakpoint: addBreakpoint,
+            removeBreakpoint: removeBreakpoint,
+            getSetting: getSetting,
+            updateSetting: updateSetting
         };
     };    
 
