@@ -6,7 +6,6 @@ TinyFoot is a lightweight, modern alternative to BigFoot.js for managing footnot
 ## Features
 
 - **Pure JavaScript (ES6+) Implementation**: No reliance on jQuery or other libraries, making TinyFoot more efficient and less resource-intensive.
-- **Modular Code**: The code is organized and modular, improving testability, maintainability, and future scalability.
 - **Simplified Setup**: Only three files required:
   - `index.html`: Your web page file with integrated footnotes.
   - `style.css`: Minimal CSS to style your footnotes.
