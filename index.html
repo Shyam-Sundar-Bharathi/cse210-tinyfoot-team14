@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Page Title</title>
-    <script src="https://code.jquery.com/jquery-2.0.0.min.js"></script>
     <script src="src/js/bigfoot.js"></script>
     <link rel = "stylesheet" href="dist/bigfoot-default.css">
 </head>
@@ -30,11 +29,11 @@
     <script>
         function getCurrentDateTime() {
             var currentDateTime = new Date();
-            return currentDateTime.toLocaleString(); 
+            return currentDateTime.toLocaleString();  // Formats date and time as a string
         }
-        
-        $('#current-date-time').text(getCurrentDateTime());
 
+        // Insert current date and time into the footnote
+        document.getElementById('current-date-time').textContent = getCurrentDateTime();
 
         const newsHeadlines = [
             "New AI breakthrough in healthcare industry.",
@@ -43,17 +42,16 @@
         ];
 
         function displayNews() {
-            const newsList = $('#news-list');
-                newsHeadlines.forEach(function(news) {
-                $('<li></li>').text(news).appendTo(newsList);
+            const newsList = document.getElementById('news-list');
+            newsHeadlines.forEach(function(news) {
+                var listItem = document.createElement('li');
+                listItem.textContent = news;
+                newsList.appendChild(listItem);
             });
         }
-        displayNews();
 
         // Initialize Bigfoot plugin
-        bigfoot({
-            animationDuration: 3000,
-        });
+        bigfoot();
     </script>
 </body>
 </html>
