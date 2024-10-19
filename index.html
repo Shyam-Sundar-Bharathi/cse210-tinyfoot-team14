@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Page Title</title>
     <script src="src/js/bigfoot.js"></script>
-    <link rel = "stylesheet" href="dist/bigfoot-default.css">
+    <link rel = "stylesheet" href="src/styles/bigfoot.css">
 </head>
 <body>
     <p>
@@ -43,12 +43,14 @@
 
         function displayNews() {
             const newsList = document.getElementById('news-list');
-            newsHeadlines.forEach(function(news) {
+            newsHeadlines.forEach((news) => {
                 var listItem = document.createElement('li');
                 listItem.textContent = news;
                 newsList.appendChild(listItem);
             });
         }
+        //calling the display news
+        displayNews();
 
         // Initialize Bigfoot plugin
         bigfoot();
