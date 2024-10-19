@@ -292,7 +292,7 @@
         };
         
 
-        var bindScrollHandler = function() {
+        const bindScrollHandler = function() {
             if (!settings.preventPageScroll) {
               return this;
             }
@@ -303,11 +303,11 @@
             return this;
         };
 
-        var scrollHandler = function(event, el) {
-            var popover = el.closest(".bigfoot-footnote");
-            var scrollTop = el.scrollTop;
-            var scrollHeight = el.scrollHeight;
-            var height = parseInt(getComputedStyle(el).height);
+        const scrollHandler = function(event, el) {
+            let popover = el.closest(".bigfoot-footnote");
+            let scrollTop = el.scrollTop;
+            let scrollHeight = el.scrollHeight;
+            let height = parseInt(getComputedStyle(el).height);
             
             if (scrollTop > 0 && scrollTop < 10) {
               popover.classList.add("is-scrollable");
@@ -317,10 +317,10 @@
               return;
             }
           
-            var delta = event.type === "DOMMouseScroll" ? event.detail * -40 : event.wheelDelta;
-            var up = delta > 0;
+            let delta = event.type === "DOMMouseScroll" ? event.detail * -40 : event.wheelDelta;
+            let up = delta > 0;
           
-            var prevent = function() {
+            const prevent = function() {
               event.stopPropagation();
               event.preventDefault();
               return false;
