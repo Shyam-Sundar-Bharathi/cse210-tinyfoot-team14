@@ -72,4 +72,7 @@ While Bigfoot.js offers useful functionality for handling complex footnotes, its
 ## Demo
 https://shyam-sundar-bharathi.github.io/cse210-bigfoot-team14/
 
+## GitHub Repository
+https://github.com/Shyam-Sundar-Bharathi/cse210-bigfoot-team14
+
 
