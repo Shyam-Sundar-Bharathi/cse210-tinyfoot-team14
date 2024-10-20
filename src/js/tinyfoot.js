@@ -44,14 +44,13 @@
         const footnoteInit = () => {
             let curResetElement, currentLastFootnoteLink, footnoteAnchors, footnoteButton, lastResetElement, parent, relevantFNLink, relevantFootnote;
             let finalFNLinks = [], footnoteIDNum, footnoteLinks = [], footnotes = [], footnoteNum;
-            
+
             const footnoteButtonSearchQuery = settings.scope ? `${settings.scope} a[href*='#']` : "a[href*='#']";
-        
             footnoteAnchors = [...document.querySelectorAll(footnoteButtonSearchQuery)].filter(anchor => {
                 const relAttr = anchor.getAttribute("rel") || "";
                 const href = anchor.getAttribute("href") + relAttr;
                 const parentClass = anchor.closest(`[class*="${settings.footnoteParentClass}"]:not(a):not(${settings.anchorParentTagname})`);
-                return settings.anchorPattern.test(href) && !parentClass;
+                return href.match(settings.anchorPattern) && !parentClass;
             });
         
             cleanFootnoteLinks(footnoteAnchors, footnoteLinks);
