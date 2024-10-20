@@ -1,10 +1,10 @@
 /* A button that has no ellipse, but instead shows the footnote's number on the
    page. Note that the number will be reset to 1 depending on the selector passed
-   to bigfoot's `numberResetSelector` option.
+   to tinyfoot's `numberResetSelector` option.
    @author Rashi Bhansali
 */
 
-.bigfoot-footnote__button {
+.tinyfoot-footnote__button {
     position: relative;
     height: var(--button-height); /* Assuming $button-height is defined as a CSS variable */
     width: 1.5em;
@@ -12,7 +12,7 @@
   
   }
   
-  .bigfoot-footnote__button:after {
+  .tinyfoot-footnote__button:after {
     /* CONTENT */
     content: attr(data-footnote-number);
   
@@ -34,12 +34,12 @@
     transition: color var(--popover-transition-default-duration) var(--popover-transition-default-timing-function); /* Assuming transition values are defined as CSS variables */
   }
   
-  .bigfoot-footnote__button:hover:after,
-  .bigfoot-footnote__button.is-active:after {
+  .tinyfoot-footnote__button:hover:after,
+  .tinyfoot-footnote__button.is-active:after {
     color: white;
   }
   
-  .bigfoot-footnote__button__circle {
+  .tinyfoot-footnote__button__circle {
     display: none;
   }
   

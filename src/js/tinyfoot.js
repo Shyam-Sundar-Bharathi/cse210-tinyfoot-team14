@@ -1,5 +1,5 @@
 (function() {
-    const bigfoot = (options) => {
+    const tinyfoot = (options) => {
 
         const defaults = {
           actionOriginalFN: "hide",
@@ -21,19 +21,19 @@
           preventPageScroll: true,
           scope: false,
           useFootnoteOnlyOnce: true,
-          contentMarkup: `<aside class='bigfoot-footnote is-positioned-bottom' data-footnote-number='{{FOOTNOTENUM}}' data-footnote-identifier='{{FOOTNOTEID}}' alt='Footnote {{FOOTNOTENUM}}'>
-            <div class='bigfoot-footnote__wrapper'>
-              <div class='bigfoot-footnote__content'>
+          contentMarkup: `<aside class='tinyfoot-footnote is-positioned-bottom' data-footnote-number='{{FOOTNOTENUM}}' data-footnote-identifier='{{FOOTNOTEID}}' alt='Footnote {{FOOTNOTENUM}}'>
+            <div class='tinyfoot-footnote__wrapper'>
+              <div class='tinyfoot-footnote__content'>
                 {{FOOTNOTECONTENT}}
               </div>
             </div>
-            <div class='bigfoot-footnote__tooltip'></div>
+            <div class='tinyfoot-footnote__tooltip'></div>
           </aside>`,
-          buttonMarkup: `<div class='bigfoot-footnote__container'>
-            <button class='bigfoot-footnote__button' id='{{SUP:data-footnote-backlink-ref}}' data-footnote-number='{{FOOTNOTENUM}}' data-footnote-identifier='{{FOOTNOTEID}}' alt='See Footnote {{FOOTNOTENUM}}' rel='footnote' data-bigfoot-footnote='{{FOOTNOTECONTENT}}'>
-              <svg class='bigfoot-footnote__button__circle' viewbox='0 0 6 6' preserveAspectRatio='xMinYMin'><circle r='3' cx='3' cy='3' fill='white'></circle></svg>
-              <svg class='bigfoot-footnote__button__circle' viewbox='0 0 6 6' preserveAspectRatio='xMinYMin'><circle r='3' cx='3' cy='3' fill='white'></circle></svg>
-              <svg class='bigfoot-footnote__button__circle' viewbox='0 0 6 6' preserveAspectRatio='xMinYMin'><circle r='3' cx='3' cy='3' fill='white'></circle></svg>
+          buttonMarkup: `<div class='tinyfoot-footnote__container'>
+            <button class='tinyfoot-footnote__button' id='{{SUP:data-footnote-backlink-ref}}' data-footnote-number='{{FOOTNOTENUM}}' data-footnote-identifier='{{FOOTNOTEID}}' alt='See Footnote {{FOOTNOTENUM}}' rel='footnote' data-tinyfoot-footnote='{{FOOTNOTECONTENT}}'>
+              <svg class='tinyfoot-footnote__button__circle' viewbox='0 0 6 6' preserveAspectRatio='xMinYMin'><circle r='3' cx='3' cy='3' fill='white'></circle></svg>
+              <svg class='tinyfoot-footnote__button__circle' viewbox='0 0 6 6' preserveAspectRatio='xMinYMin'><circle r='3' cx='3' cy='3' fill='white'></circle></svg>
+              <svg class='tinyfoot-footnote__button__circle' viewbox='0 0 6 6' preserveAspectRatio='xMinYMin'><circle r='3' cx='3' cy='3' fill='white'></circle></svg>
             </button>
           </div>`
         };
@@ -210,7 +210,7 @@
 
         const buttonHover = (event) => {
             if (settings.activateOnHover) {
-                const buttonHovered = event.target.closest(".bigfoot-footnote__button");
+                const buttonHovered = event.target.closest(".tinyfoot-footnote__button");
                 const dataIdentifier = `[data-footnote-identifier='${buttonHovered.getAttribute("data-footnote-identifier")}']`;
                 
                 if (buttonHovered.classList.contains("is-active")) {
@@ -220,25 +220,25 @@
                 buttonHovered.classList.add("is-hover-instantiated");
                 
                 if (!settings.allowMultipleFN) {
-                    const otherPopoverSelector = `.bigfoot-footnote:not(${dataIdentifier})`;
+                    const otherPopoverSelector = `.tinyfoot-footnote:not(${dataIdentifier})`;
                     removePopovers(otherPopoverSelector);
                 }
                 
-                createPopover(`.bigfoot-footnote__button${dataIdentifier}`).classList.add("is-hover-instantiated");
+                createPopover(`.tinyfoot-footnote__button${dataIdentifier}`).classList.add("is-hover-instantiated");
             }
         };
         
 
         const touchClick = (event) => {
             const target = event.target;
-            const nearButton = target.closest(".bigfoot-footnote__button");
-            const nearFootnote = target.closest(".bigfoot-footnote");
+            const nearButton = target.closest(".tinyfoot-footnote__button");
+            const nearFootnote = target.closest(".tinyfoot-footnote");
         
             if (nearButton) {
                 event.preventDefault();
                 clickButton(nearButton);
             } else if (!nearFootnote) {
-                if (document.querySelector(".bigfoot-footnote")) {
+                if (document.querySelector(".tinyfoot-footnote")) {
                     removePopovers();
                 }
             }
@@ -258,18 +258,18 @@
                     button.classList.remove("changing");
                 }, settings.popoverCreateDelay);
         
-                createPopover(`.bigfoot-footnote__button[${dataIdentifier}]`);
+                createPopover(`.tinyfoot-footnote__button[${dataIdentifier}]`);
                 button.classList.add("is-click-instantiated");
         
                 if (!settings.allowMultipleFN) {
-                    removePopovers(`.bigfoot-footnote:not([${dataIdentifier}])`);
+                    removePopovers(`.tinyfoot-footnote:not([${dataIdentifier}])`);
                 }
             } 
             else {
                 if (!settings.allowMultipleFN) {
                     removePopovers();
                 } else {
-                    removePopovers(`.bigfoot-footnote[${dataIdentifier}]`);
+                    removePopovers(`.tinyfoot-footnote[${dataIdentifier}]`);
                 }
             }
         };
@@ -283,8 +283,8 @@
         const unhoverFeet = (e) => {
             if (settings.deleteOnUnhover && settings.activateOnHover) {
                 return setTimeout(() => {
-                    const target = e.target.closest(".bigfoot-footnote, .bigfoot-footnote__button");
-                    if (!document.querySelector(".bigfoot-footnote__button:hover, .bigfoot-footnote:hover")) {
+                    const target = e.target.closest(".tinyfoot-footnote, .tinyfoot-footnote__button");
+                    if (!document.querySelector(".tinyfoot-footnote__button:hover, .tinyfoot-footnote:hover")) {
                         return removePopovers();
                     }
                 }, settings.hoverDelay);
@@ -304,7 +304,7 @@
         };
 
         const scrollHandler = function(event, el) {
-            let popover = el.closest(".bigfoot-footnote");
+            let popover = el.closest(".tinyfoot-footnote");
             let scrollTop = el.scrollTop;
             let scrollHeight = el.scrollHeight;
             let height = parseInt(getComputedStyle(el).height);
@@ -343,14 +343,14 @@
             if (settings.positionContent) {
                 let type = e ? e.type : "resize";
         
-                document.querySelectorAll(".bigfoot-footnote").forEach(footnote => {
+                document.querySelectorAll(".tinyfoot-footnote").forEach(footnote => {
                     // Retrieve dimensions and positioning details
                     let identifier = footnote.getAttribute("data-footnote-identifier");
-                    let contentWrapper = footnote.querySelector(".bigfoot-footnote__content");
-                    let button = document.querySelector(`.bigfoot-footnote__button[data-footnote-identifier='${identifier}']`);
+                    let contentWrapper = footnote.querySelector(".tinyfoot-footnote__content");
+                    let button = document.querySelector(`.tinyfoot-footnote__button[data-footnote-identifier='${identifier}']`);
                     let roomLeft = roomCalc(button);
                     let marginSize = parseFloat(getComputedStyle(footnote).marginTop);
-                    let maxHeightInCSS = parseFloat(footnote.getAttribute("data-bigfoot-max-height"));
+                    let maxHeightInCSS = parseFloat(footnote.getAttribute("data-tinyfoot-max-height"));
                     let totalHeight = 2 * marginSize + footnote.offsetHeight;
                     let maxHeightOnScreen = 10000;
         
@@ -382,11 +382,11 @@
                     thisElement = footnote;
                     // Resize handling
                     if (type === "resize") {
-                        // Get maxWidthInCSS from the data attribute "bigfoot-max-width"
-                        const maxWidthInCSS = parseFloat(thisElement.getAttribute("bigfoot-max-width"));
+                        // Get maxWidthInCSS from the data attribute "tinyfoot-max-width"
+                        const maxWidthInCSS = parseFloat(thisElement.getAttribute("tinyfoot-max-width"));
                         
                         // Select the main wrapper for the footnote
-                        const mainWrap = thisElement.querySelector(".bigfoot-footnote__wrapper");
+                        const mainWrap = thisElement.querySelector(".tinyfoot-footnote__wrapper");
                       
                         // Set maxWidth initially based on the CSS value
                         let maxWidth = maxWidthInCSS;
@@ -413,7 +413,7 @@
                         }
                       
                         // Ensure maxWidth doesn't exceed the content width plus 1
-                        const contentElement = thisElement.querySelector(".bigfoot-footnote__content");
+                        const contentElement = thisElement.querySelector(".tinyfoot-footnote__content");
                         console.log(contentElement.style);
                         maxWidth = Math.min(maxWidth, contentElement.offsetWidth + 1);
                       
@@ -503,9 +503,9 @@
         
             const mqListener = (mq) => {
                 if (mq.matches) {
-                    trueCallback(removeOpen, bigfoot);
+                    trueCallback(removeOpen, tinyfoot);
                 } else {
-                    falseCallback(removeOpen, bigfoot);
+                    falseCallback(removeOpen, tinyfoot);
                 }
             };
         
@@ -522,18 +522,18 @@
         };
         
         const makeDefaultCallbacks = (removeOpen, deleteDelay, position, callback) => {
-            return (removeOpen, bigfoot) => {
+            return (removeOpen, tinyfoot) => {
               let closedPopovers;
           
               if (removeOpen) {
-                closedPopovers = bigfoot.close();
-                bigfoot.updateSetting("activateCallback", callback);
+                closedPopovers = tinyfoot.close();
+                tinyfoot.updateSetting("activateCallback", callback);
               }
           
               setTimeout(() => {
-                bigfoot.updateSetting("positionContent", position);
+                tinyfoot.updateSetting("positionContent", position);
                 if (removeOpen) {
-                  bigfoot.activate(closedPopovers);
+                  tinyfoot.activate(closedPopovers);
                 }
               }, deleteDelay);
             };
@@ -592,7 +592,7 @@
           
 
         const positionTooltip = function(popover, leftRelative = 0.5) {
-            const tooltip = popover.querySelector(".bigfoot-footnote__tooltip");
+            const tooltip = popover.querySelector(".tinyfoot-footnote__tooltip");
             if (tooltip) {
                 tooltip.style.left = `${leftRelative * 100}%`;
             }
@@ -644,7 +644,7 @@
             } else if (settings.allowMultipleFN) {
                 buttons = document.querySelectorAll(selector);
             } else {
-                buttons = [document.querySelector(selector).closest(".bigfoot-footnote__button")];
+                buttons = [document.querySelector(selector).closest(".tinyfoot-footnote__button")];
             }
             
             // Process each button
@@ -655,7 +655,7 @@
                     content = settings.contentMarkup
                         .replace(/\{\{FOOTNOTENUM\}\}/g, button.getAttribute("data-footnote-number"))
                         .replace(/\{\{FOOTNOTEID\}\}/g, button.getAttribute("data-footnote-identifier"))
-                        .replace(/\{\{FOOTNOTECONTENT\}\}/g, button.getAttribute("data-bigfoot-footnote"))
+                        .replace(/\{\{FOOTNOTECONTENT\}\}/g, button.getAttribute("data-tinyfoot-footnote"))
                         .replace(/\&gtsym\;/g, "&gt;")
                         .replace(/\&ltsym\;/g, "&lt;");
                     
@@ -677,14 +677,14 @@
                     popoverStates[button.getAttribute("data-footnote-identifier")] = "init";
                     console.log(popoverStates);
                     const maxWidth = calculatePixelDimension(getComputedStyle(contentElement).maxWidth, contentElement);
-                    contentElement.setAttribute("bigfoot-max-width", maxWidth);
+                    contentElement.setAttribute("tinyfoot-max-width", maxWidth);
                     contentElement.style.maxWidth = "10000px"; // Set large max-width for animation
                     contentElement.style.transitionDuration = settings.animationDuration + "ms";
         
                     // Configure the content container
-                    contentContainer = contentElement.querySelector(".bigfoot-footnote__content");
+                    contentContainer = contentElement.querySelector(".tinyfoot-footnote__content");
                     const maxHeight = calculatePixelDimension(getComputedStyle(contentContainer).maxHeight, contentContainer);
-                    contentElement.setAttribute("data-bigfoot-max-height", maxHeight);
+                    contentElement.setAttribute("data-tinyfoot-max-height", maxHeight);
         
                     repositionFeet();
                     button.classList.add("is-active");
@@ -702,13 +702,13 @@
             return popoversCreated;
         }
 
-        const removePopovers = (footnotes = ".bigfoot-footnote", timeout = settings.popoverDeleteDelay) => {
+        const removePopovers = (footnotes = ".tinyfoot-footnote", timeout = settings.popoverDeleteDelay) => {
             let buttonsClosed = [];
             
             const footnoteElements = document.querySelectorAll(footnotes);
             footnoteElements.forEach(footnote => {
                 const footnoteID = footnote.getAttribute("data-footnote-identifier");
-                const linkedButton = document.querySelector(`.bigfoot-footnote__button[data-footnote-identifier='${footnoteID}']`);
+                const linkedButton = document.querySelector(`.tinyfoot-footnote__button[data-footnote-identifier='${footnoteID}']`);
         
                 if (!linkedButton.classList.contains("changing")) {
                     buttonsClosed.push(linkedButton);
@@ -734,7 +734,7 @@
 
         const addEventListeners = () => {
             document.addEventListener("mouseenter", (event) => {
-                if (event.target.matches(".bigfoot-footnote__button")) {
+                if (event.target.matches(".tinyfoot-footnote__button")) {
                   buttonHover(event);
                 }
               });
@@ -776,5 +776,5 @@
         };
     };    
 
-    window.bigfoot = bigfoot;
+    window.tinyfoot = tinyfoot;
 })();
