@@ -244,7 +244,6 @@
         };
         
         const clickButton = function(button) {
-            console.log('inside click button');
             let dataIdentifier;
             button.blur();
             dataIdentifier = `data-footnote-identifier='${button.getAttribute("data-footnote-identifier")}'`;
@@ -356,8 +355,6 @@
                     // Determine position (top or bottom)
                     let positionOnTop = roomLeft.bottomRoom < totalHeight && roomLeft.topRoom > roomLeft.bottomRoom;
                     let lastState = popoverStates[identifier];
-                    console.log('pos on top:',positionOnTop);
-                    console.log('lastState',lastState);
                     // Update classes and max heights
                     if (positionOnTop) {
                         if (lastState !== "top") {
@@ -413,7 +410,6 @@
                       
                         // Ensure maxWidth doesn't exceed the content width plus 1
                         const contentElement = thisElement.querySelector(".tinyfoot-footnote__content");
-                        console.log(contentElement.style);
                         maxWidth = Math.min(maxWidth, contentElement.offsetWidth + 1);
                       
                         // Set the max-width of the main wrapper
@@ -659,22 +655,19 @@
                         .replace(/\&ltsym\;/g, "&lt;");
                     
                     content = replaceWithReferenceAttributes(content, "BUTTON", button);
-                    console.log(content);
                 } finally {
                     // Create and configure the content element
                     const range = document.createRange();
                     const contentElement = range.createContextualFragment(content).firstElementChild; 
                     //content has "<aside>...</aside>"; contextual fragment creates a fragment out of the content string and firstelement generates ref to the actual element
                     //this method avoids creating a <div> and then adding content to its innerHTML
-                    console.log(contentElement);
                     try {
                         settings.activateCallback(contentElement, button);
-                    } catch (error) { console.log('hello')}
+                    } catch (error) {}
         
                     // Insert the contentElement after the button
                     button.insertAdjacentElement('afterend', contentElement);
                     popoverStates[button.getAttribute("data-footnote-identifier")] = "init";
-                    console.log(popoverStates);
                     const maxWidth = calculatePixelDimension(getComputedStyle(contentElement).maxWidth, contentElement);
                     contentElement.setAttribute("tinyfoot-max-width", maxWidth);
                     contentElement.style.maxWidth = "10000px"; // Set large max-width for animation
