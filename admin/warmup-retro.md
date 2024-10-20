@@ -117,6 +117,6 @@
 - The next steps involve solidifying the team’s understanding of the refactored code and optimizing the workflow for the upcoming phases of the project. Addressing the challenges and implementing the suggested improvements will set the team up for continued success.
 
 ## Appreciation for everyone's effort and collaboration in the project!
-![Retro wrapup](admin/misc/retro-1.png)
-![Retro wrapup](admin/misc/retro-2.png)
+![Retro wrapup](misc/retro-1.png)
+![Retro wrapup](misc/retro-2.png)
 ## We are ready to move forward!
