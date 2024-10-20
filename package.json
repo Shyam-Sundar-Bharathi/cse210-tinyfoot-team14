@@ -3,15 +3,31 @@
   "version": "0.0.1",
   "main": "src/js/tinyfoot.js",
   "description": "A lightweight, modern alternative to BigFoot.js that uses JavaScript ES6 for managing footnotes on websites.",
-  "homepage": "",
+  "homepage": "https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14#readme",
   "devDependencies": {
-    
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "babel-loader": "^9.2.1",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14"
+    "url": "git+https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14.git"
   },
   "bugs": {
     "url": "https://github.com/Shyam-Sundar-Bharathi/cse210-tinyfoot-team14/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "html-webpack-plugin": "^5.6.2"
   }
 }
