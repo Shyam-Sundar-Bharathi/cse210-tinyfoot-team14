@@ -8,10 +8,14 @@
     "@babel/core": "^7.25.8",
     "@babel/preset-env": "^7.25.8",
     "babel-loader": "^9.2.1",
+<<<<<<< HEAD
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "mini-css-extract-plugin": "^2.9.1",
     "style-loader": "^4.0.0",
+=======
+    "css-minimizer-webpack-plugin": "^7.0.0",
+>>>>>>> 9080177 (Use Webpack to minify, bundle the JS and CSS files.)
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4"
@@ -31,7 +35,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "copy-webpack-plugin": "^12.0.2",
+=======
+>>>>>>> 9080177 (Use Webpack to minify, bundle the JS and CSS files.)
     "html-webpack-plugin": "^5.6.2"
   }
 }
