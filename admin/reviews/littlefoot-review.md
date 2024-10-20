@@ -105,3 +105,6 @@ Littlefoot.js is a well-structured and lightweight library suitable for projects
 
 ### Demo
 https://shyam-sundar-bharathi.github.io/cse210-littlefoot-team14/
+
+## GitHub Repository
+https://github.com/Shyam-Sundar-Bharathi/cse210-littefoot-team14
