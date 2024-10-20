@@ -211,7 +211,6 @@
             if (settings.activateOnHover) {
                 const buttonHovered = event.target.closest(".tinyfoot-footnote__button");
                 const dataIdentifier = `[data-footnote-identifier='${buttonHovered.getAttribute("data-footnote-identifier")}']`;
-                
                 if (buttonHovered.classList.contains("is-active")) {
                     return;
                 }
@@ -222,8 +221,7 @@
                     const otherPopoverSelector = `.tinyfoot-footnote:not(${dataIdentifier})`;
                     removePopovers(otherPopoverSelector);
                 }
-                
-                createPopover(`.tinyfoot-footnote__button${dataIdentifier}`).classList.add("is-hover-instantiated");
+                createPopover(`.tinyfoot-footnote__button${dataIdentifier}`).forEach((button) => { button.classList.add("is-hover-instantiated") });
             }
         };
         
@@ -279,14 +277,17 @@
         };
         
         const unhoverFeet = (e) => {
+          if(e.target.classList.contains("is-hover-instantiated")){
+            console.log('in unhover');
             if (settings.deleteOnUnhover && settings.activateOnHover) {
+              console.log('conditions met');
                 return setTimeout(() => {
-                    const target = e.target.closest(".tinyfoot-footnote, .tinyfoot-footnote__button");
                     if (!document.querySelector(".tinyfoot-footnote__button:hover, .tinyfoot-footnote:hover")) {
                         return removePopovers();
                     }
                 }, settings.hoverDelay);
             }
+          }
         };
         
 
@@ -701,7 +702,6 @@
             footnoteElements.forEach(footnote => {
                 const footnoteID = footnote.getAttribute("data-footnote-identifier");
                 const linkedButton = document.querySelector(`.tinyfoot-footnote__button[data-footnote-identifier='${footnoteID}']`);
-        
                 if (!linkedButton.classList.contains("changing")) {
                     buttonsClosed.push(linkedButton);
                     linkedButton.classList.remove("is-active", "is-hover-instantiated", "is-click-instantiated");
@@ -709,7 +709,7 @@
         
                     footnote.classList.remove("is-active");
                     footnote.classList.add("disapearing");
-        
+                    
                     setTimeout(() => {
                         footnote.remove();
                         delete popoverStates[footnoteID];
@@ -725,30 +725,27 @@
         /************ MAPPING EVENT LISTENERS TO EVENT HANDLERS *************/
 
         const addEventListeners = () => {
-            document.addEventListener("mouseenter", (event) => {
-                if (event.target.matches(".tinyfoot-footnote__button")) {
-                  buttonHover(event);
-                }
-              });
-            
-              document.addEventListener("touchend", touchClick);
-              document.addEventListener("click", touchClick);
-            
-              document.addEventListener("mouseout", (event) => {
-                if (event.target.classList.contains("is-hover-instantiated")) {
-                  unhoverFeet(event);
-                }
-              });
-            
-              document.addEventListener("keyup", escapeKeypress);
-              window.addEventListener("scroll", repositionFeet);
-              window.addEventListener("resize", repositionFeet);
-            
-              window.addEventListener("gestureend", () => {
-                repositionFeet();
-              });
+            /*** HOVER EVENTS ***/
+          const buttons = document.querySelectorAll('.tinyfoot-footnote__button');
+          // Add the mouseenter and mouseout event listeners to each button
+          buttons.forEach(button => {
+                  button.addEventListener('mouseenter', buttonHover);
+                  button.addEventListener('mouseout', unhoverFeet);
+          });
+          /*** CLICK EVENTS ***/
+          document.addEventListener("touchend", touchClick);
+          document.addEventListener("click", touchClick);
+          
+          document.addEventListener("keyup", escapeKeypress);
+          window.addEventListener("scroll", repositionFeet);
+          window.addEventListener("resize", repositionFeet);
+        
+          window.addEventListener("gestureend", () => {
+            repositionFeet();
+          });
         };
       
+        //DOM MANIPULATION STARTS HERE
         document.addEventListener('DOMContentLoaded', () => {
             footnoteInit();
             addEventListeners();
