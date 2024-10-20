@@ -278,9 +278,7 @@
         
         const unhoverFeet = (e) => {
           if(e.target.classList.contains("is-hover-instantiated")){
-            console.log('in unhover');
             if (settings.deleteOnUnhover && settings.activateOnHover) {
-              console.log('conditions met');
                 return setTimeout(() => {
                     if (!document.querySelector(".tinyfoot-footnote__button:hover, .tinyfoot-footnote:hover")) {
                         return removePopovers();
