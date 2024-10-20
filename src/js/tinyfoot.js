@@ -107,9 +107,9 @@
                 footnoteButton = replaceWithReferenceAttributes(footnoteButton, "SUP", relevantFNLink);
                 footnoteButton = replaceWithReferenceAttributes(footnoteButton, "FN", relevantFootnote);
                 
-                const footnoteButtonElem = document.createElement('div');
-                footnoteButtonElem.innerHTML = footnoteButton;
-                relevantFNLink.insertAdjacentElement('beforebegin', footnoteButtonElem);
+                const range = document.createRange();
+                const footnoteButtonElement = range.createContextualFragment(footnoteButton).firstElementChild;
+                relevantFNLink.insertAdjacentElement('beforebegin', footnoteButtonElement);
         
                 parent = relevantFootnote.parentElement;
         
