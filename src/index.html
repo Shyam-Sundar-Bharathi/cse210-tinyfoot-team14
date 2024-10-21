@@ -1,13 +1,22 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en" style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(src/assets/coffee.png); background-size: cover; min-height:100%;">
+=======
+<html lang="en" style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(dist/assets/coffee.png); background-size: cover; min-height:100%;">
+>>>>>>> 9080177 (Use Webpack to minify, bundle the JS and CSS files.)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tinyfoot Demo #14: History of Coffee with Footnotes</title>
+<<<<<<< HEAD
     <script src="src/js/tinyfoot.js"></script>
     <link rel = "stylesheet" href="src/styles/tinyfoot.css">
     <link rel = "stylesheet" href="src/styles/tinyfoot-variables.css">
-    <link rel = "stylesheet" href="src/styles/Variants/tinyfoot-number.css">
+     <!-- FOR NUMERIC FOOTNOTES -->
+     <link rel = "stylesheet" href="dist/styles/tinyfootNumeric.css">
+     <!-- FOR FOOTNOTES AT THE BOTTOM : set `positionContent: false` while initializing TinyFoot object -->
+     <!-- <link rel = "stylesheet" href="dist/styles/tinyfootBottom.css"> -->
+ 
 
 </head>
 <body>
@@ -16,6 +25,22 @@
         <p>Coffee has a rich and storied history that dates back centuries. Its origin is often traced to <strong>Ethiopia</strong>, where legend has it that a goat herder named Kaldi discovered the coffee bean after noticing his goats became unusually energetic after eating the berries from a certain tree<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. Word of this energizing fruit quickly spread throughout the region, and coffee cultivation and trade began in the Arabian Peninsula.</p>
 
         <p>By the 15th century, coffee was being grown in the Yemeni district of Arabia and by the 16th century, it had spread to Persia, Egypt, Syria, and Turkey<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. It was not only enjoyed in homes but also in the many public coffee houses, called <strong>qahveh khaneh</strong><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>, which began to appear in cities across the Middle East. Coffee houses quickly became centers of social activity and communication.</p>
+=======
+    <script src="dist/js/tinyfoot.js"></script>
+    <link rel = "stylesheet" href="dist/styles/tinyfootDefault.css">
+    <!-- FOR NUMERIC FOOTNOTES -->
+    <link rel = "stylesheet" href="dist/styles/tinyfootNumeric.css">
+    <!-- FOR FOOTNOTES AT THE BOTTOM : set `positionContent: false` while initializing TinyFoot object -->
+    <!-- <link rel = "stylesheet" href="dist/styles/tinyfootBottom.css"> -->
+
+</head>
+<body>
+        <center><h1>The Fascinating History of Coffee</h1></center>
+
+        <p>Coffee has a rich and storied history that dates back centuries. Its origin is often traced to <strong>Ethiopia</strong>, where legend has it that a goat herder named Kaldi discovered the coffee bean after noticing his goats became unusually energetic after eating the berries from a certain tree<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. Word of this energizing fruit quickly spread throughout the region, and coffee cultivation and trade began in the Arabian Peninsula.</p>
+
+        <p>By the 15th century, coffee was being grown in the Yemeni srcrict of Arabia and by the 16th century, it had spread to Persia, Egypt, Syria, and Turkey<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. It was not only enjoyed in homes but also in the many public coffee houses, called <strong>qahveh khaneh</strong><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>, which began to appear in cities across the Middle East. Coffee houses quickly became centers of social activity and communication.</p>
+>>>>>>> 9080177 (Use Webpack to minify, bundle the JS and CSS files.)
 
         <p>European travelers to the Near East brought back stories of an unusual dark black beverage. By the 17th century, coffee had made its way to Europe and was becoming popular across the continent<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>. Initially met with suspicion or fear—some calling it the "bitter invention of Satan"—it was eventually accepted when Pope Clement VIII purportedly blessed the drink<sup id="fnref:5"></sup><a href="#fn:5" rel="footnote">5</a></sup>. Coffee houses sprung up in major cities such as Venice, London, and Paris, serving as hubs for writers, artists, and intellectuals.</p>
 
@@ -35,11 +60,20 @@
             </ol>
         </div>
     <script>
+<<<<<<< HEAD
+=======
+        //Initializing Tinyfoot Object with properties
+>>>>>>> 9080177 (Use Webpack to minify, bundle the JS and CSS files.)
         tinyfoot({
             animationDuration: 500,
             activateOnHover: true,
             deleteOnUnhover: true,
-            showDateAndTime: true
+            showDateAndTime: true,
+<<<<<<< HEAD
+            // positionContent: true
+=======
+            // positionContent: false
+>>>>>>> 9080177 (Use Webpack to minify, bundle the JS and CSS files.)
         });
     </script>
 </body>

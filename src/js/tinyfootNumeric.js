@@ -1,0 +1,1 @@
+import '../styles/Variants/tinyfoot-number.css';

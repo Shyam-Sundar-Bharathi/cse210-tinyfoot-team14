@@ -225,7 +225,6 @@
               createPopover(`.tinyfoot-footnote__button${dataIdentifier}`).forEach((button) => { button.classList.add("is-hover-instantiated") });
           }
       };
-      
 
       const touchClick = (event) => {
           const target = event.target;

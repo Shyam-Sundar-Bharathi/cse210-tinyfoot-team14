@@ -1,0 +1,352 @@
+/*!***************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/tinyfoot.css ***!
+  \***************************************************************************/
+/*
+// The button that activates the footnote. By default, this will appear as a
+// flat button that has an ellipse contained inside of it.
+
+// @state .is-active            - The associated popover has been activated and is visible.
+// @author Rashi Bhansali
+*/
+
+.tinyfoot-footnote__button {
+    position: relative;
+    z-index: 5;
+    top: -0.1em;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: inline-block;
+    padding: 0.35em;
+    margin: 0 0.1em 0 0.2em;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+    background-color: rgba(110, 110, 110, 0.2);
+    backface-visibility: hidden;
+    font-size: 1rem;
+    line-height: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    transition-property: background-color;
+    transition-duration: 0.25s;
+}
+.tinyfoot-footnote__button:hover, .tinyfoot-footnote__button:focus {
+    outline: none;
+    background-color: rgba(110, 110, 110, 0.5);
+}
+.tinyfoot-footnote__button:active {
+    background-color: rgba(110, 110, 110, 0.5);
+}
+.tinyfoot-footnote__button.is-active {
+    background-color: rgba(110, 110, 110, 1);
+    transition-delay: 0.1s;
+}
+.tinyfoot-footnote__button:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+.tinyfoot-footnote__button__circle {
+    display: inline-block;
+    width: 0.25em;
+    height: 0.25em;
+    margin-right: 0.25em;
+}
+.tinyfoot-footnote__button__circle:last-child {
+    margin-right: 0;
+}
+.tinyfoot-footnote__container {
+    display: inline-block;
+    position: relative;
+    text-indent: 0;
+}
+
+/* Styles to restore the original footnote numbers and texts when the page is printed */
+@media not print {
+    .footnote-print-only {
+        display: none !important;
+   }
+}
+@media print {
+    .tinyfoot-footnote, .tinyfoot-footnote__button {
+        display: none !important;
+   }
+}
+
+/*
+// The popover for the footnote. This popover will be, by default, be sized and positioned
+// by the script. However, many of the sizes can be established in this stylesheet and
+// will be respected by the script. `max-width` will limit the width of the popover
+// relative to the viewport. `width` (on `tinyfoot-footnote__wrapper`) will set the
+// absolute max width. Max height can be set via a `max-height` property
+// on `tinyfoot-footnote__content`.
+
+// By default, the popover has a light gray background, a shadow for some depth,
+// rounded corners, and a tooltip pointing to the footnote button.
+
+// @state .is-active            - The popover has been activated and is visible.
+// @state .is-positioned-top    - The popover is above the button.
+// @state .is-positioned-bottom - The popover is below the button.
+// @state .is-scrollable        - The popover content is greater than the popover height.
+// @state .is-fully-scrolled    - The popover content is scrolled to the bottom. */
+
+.tinyfoot-footnote {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    box-sizing: border-box;
+    max-width: 90%;
+    margin: 1.9692388156em 0;
+    background: #fafafa;
+    opacity: 0;
+    border-radius: 0.5em;
+    border: 1px solid #c3c3c3;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    line-height: 0;
+    transition-property: opacity, transform;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+    transform: scale(0.1) translateZ(0);
+    transform-origin: 50% 0;
+}
+.tinyfoot-footnote.is-positioned-top {
+    top: auto;
+    bottom: 0;
+}
+.tinyfoot-footnote.is-active {
+    transform: scale(1) translateZ(0);
+    opacity: 0.97;
+}
+.tinyfoot-footnote.is-bottom-fixed {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: auto;
+    transform: translateY(100%);
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    opacity: 1;
+    border-width: 1px 0 0;
+    transition: transform 0.3s ease;
+}
+.tinyfoot-footnote.is-bottom-fixed.is-active {
+    transform: translateY(0);
+}
+.tinyfoot-footnote.is-bottom-fixed .tinyfoot-footnote__wrapper {
+    margin: 0 0 0 50%;
+    transform: translateX(-50%);
+    max-width: 100%;
+}
+.tinyfoot-footnote.is-bottom-fixed .tinyfoot-footnote__wrapper, .tinyfoot-footnote.is-bottom-fixed .tinyfoot-footnote__content {
+    border-radius: 0;
+}
+.tinyfoot-footnote.is-bottom-fixed .tinyfoot-footnote__tooltip {
+    display: none;
+}
+.tinyfoot-footnote.is-scrollable:after {
+    content: '';
+    position: absolute;
+    bottom: 0.3375em;
+    left: 0.3375em;
+    z-index: 14;
+    display: block;
+    height: 0.78125em;
+    width: 0.625em;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTJweCIgaGVpZ2h0PSIxNXB4IiB2aWV3Qm94PSIwIDAgMTIgMTUiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pbllNaW4iPgogICAgPGcgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9IkFycm93IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiPgogICAgICAgICAgICA8cGF0aCBkPSJNNSwwIEw1LDExLjUiIGlkPSJMaW5lIj48L3BhdGg+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0wLjUsNy41IEw1LjAyNzY5Mjc5LDEyLjAyNzY5MjgiIGlkPSJMaW5lIj48L3BhdGg+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik00LjUsNy41IEw5LjAyNzY5Mjc5LDEyLjAyNzY5MjgiIGlkPSJMaW5lLTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMDAwMDAwLCAxMC4wMDAwMDApIHNjYWxlKC0xLCAxKSB0cmFuc2xhdGUoLTcuMDAwMDAwLCAtMTAuMDAwMDAwKSAiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=);
+    background-size: cover;
+    opacity: 0.1;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+}
+.tinyfoot-footnote.is-scrollable .tinyfoot-footnote__wrapper:before, .tinyfoot-footnote.is-scrollable .tinyfoot-footnote__wrapper:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    z-index: 12;
+    left: 0;
+}
+.tinyfoot-footnote.is-scrollable .tinyfoot-footnote__wrapper:before {
+    top: -1px;
+    height: 1.1em;
+    border-radius: 0.5em 0.5em 0 0;
+    background-image: linear-gradient(to bottom, #fafafa 50%, rgba(250, 250, 250, 0) 100%);
+}
+.tinyfoot-footnote.is-scrollable .tinyfoot-footnote__wrapper:after {
+    bottom: -1px;
+    height: 1.2em;
+    border-radius: 0 0 0.5em 0.5em;
+    background-image: linear-gradient(to top, #fafafa 50%, rgba(250, 250, 250, 0) 100%);
+}
+.tinyfoot-footnote.is-scrollable ::-webkit-scrollbar {
+    display: none;
+}
+.tinyfoot-footnote.is-fully-scrolled:after, .tinyfoot-footnote.is-fully-scrolled:before {
+    opacity: 0;
+    transition-delay: 0;
+}
+.tinyfoot-footnote__wrapper {
+    position: relative;
+    z-index: 14;
+    width: 22em;
+    display: inline-block;
+    box-sizing: inherit;
+    overflow: hidden;
+    margin: 0;
+    background-color: #fafafa;
+    border-radius: 0.5em;
+    line-height: 0;
+}
+.tinyfoot-footnote__content {
+    position: relative;
+    z-index: 8;
+    display: inline-block;
+    max-height: 15em;
+    padding: 1.1em 1.3em 1.2em;
+    box-sizing: inherit;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fafafa;
+    border-radius: 0.5em;
+    -webkit-font-smoothing: subpixel-antialiased;
+    line-height: normal;
+}
+.tinyfoot-footnote__content img {
+    max-width: 100%;
+}
+.tinyfoot-footnote__content *:last-child {
+    margin-bottom: 0 !important;
+}
+.tinyfoot-footnote__content *:first-child {
+    margin-top: 0 !important;
+}
+.tinyfoot-footnote__tooltip {
+    position: absolute;
+    z-index: 12;
+    box-sizing: border-box;
+    margin-left: -0.65em;
+    width: 1.3em;
+    height: 1.3em;
+    transform: rotate(45deg);
+    background: #fafafa;
+    border: 1px solid #c3c3c3;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 0;
+}
+.is-positioned-bottom .tinyfoot-footnote__tooltip {
+    top: -0.65em;
+}
+.is-positioned-top .tinyfoot-footnote__tooltip {
+    bottom: -0.65em;
+}
+
+/*!*************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/tinyfoot-variables.css ***!
+  \*************************************************************************************/
+
+/* These are the key variables for styling the popover.
+   Just set the variable to none if you don't want that styling. */
+
+/* KEY VARIABLES
+   ========================================================================== */
+
+/* POPOVER STYLES */
+:root {
+    --popover-width: 22em;  /* Ideal width of the popover */
+    --popover-max-width: 90%;  /* Best as a % to accommodate smaller viewports */
+    --popover-max-height: 15em;  /* Maximum size of the content area */
+    --popover-color-background: rgb(250, 250, 250);  /* Color of the popover background */
+    --popover-border-radius: 0.5em;  /* Radius of the corners of the popover */
+    --popover-border: 1px solid rgb(195, 195, 195);  /* Border of the popover/tooltip */
+    --popover-inactive-opacity: 0;  /* Opacity of the popover when instantiated/deactivating */
+    --popover-active-opacity: 0.97;  /* Opacity of the popover when active */
+    --popover-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);  /* Sets the box shadow under the popover/tooltip */
+    --popover-bottom-position: auto;  /* Sets the bottom position of the popover */
+    --popover-left-position: auto;  /* Sets the left position of the popover */
+    --popover-tooltip-size: 1.3em;  /* Sets the side lengths of the tooltip */
+    --popover-scroll-indicator-width: 0.625em;  /* The width of the scroll indicator */
+    --popover-scroll-indicator-aspect-ratio: calc(15 / 12);  /* The ratio of the height over the width of the scroll indicator */
+    --popover-scroll-indicator-opacity: 0.1;  /* The active opacity of scroll indicators */
+    --popover-initial-transform-state: scale(0.1) translateZ(0);  /* The initial transform state for the popover */
+    --popover-active-transform-state: scale(1) translateZ(0);  /* The transform state for the popover once it is fully activated */
+  
+    /* OPTIONAL ELEMENTS */
+    /* ========================================================================== */
+  
+    --popover-include-tooltip: true;  /* Adds a tooltip pointing to the footnote button */
+    --popover-include-scroll-indicator: true;  /* Adds an ellipsis at the bottom of scrollable popovers */
+    --popover-include-scrolly-fades: true;  /* Fades content in on scrollable popovers */
+    --popover-scroll-indicator-icon: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTJweCIgaGVpZ2h0PSIxNXB4IiB2aWV3Qm94PSIwIDAgMTIgMTUiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pbllNaW4iPgogICAgPGcgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9IkFycm93IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiPgogICAgICAgICAgICA8cGF0aCBkPSJNNSwwIEw1LDExLjUiIGlkPSJMaW5lIj48L3BhdGg+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0wLjUsNy41IEw1LjAyNzY5Mjc5LDEyLjAyNzY5MjgiIGlkPSJMaW5lIj48L3BhdGg+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik00LjUsNy41IEw5LjAyNzY5Mjc5LDEyLjAyNzY5MjgiIGlkPSJMaW5lLTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMDAwMDAwLCAxMC4wMDAwMDApIHNjYWxlKC0xLCAxKSB0cmFuc2xhdGUoLTcuMDAwMDAwLCAtMTAuMDAwMDAwKSAiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=);  /* Icon for scroll indicator */
+  
+    /* OTHER VARIABLES */
+    /* ========================================================================== */
+  
+    --popover-margin-top: 0.1em;  /* Margin at the top of the popover */
+    --popover-padding-content-horizontal: 1.3em;  /* Horizontal padding for popover content */
+    --popover-padding-content-top: 1.1em;  /* Top padding for popover content */
+    --popover-padding-content-bottom: 1.2em;  /* Bottom padding for popover content */
+    --popover-z-index: 10;  /* Set the base so that it's above the other body children */
+    --popover-initial-transform-origin: 50% 0;  /* Transform origin for the popover */
+  
+    /* POPOVER CONTENT WRAPPER */
+    /* ========================================================================== */
+  
+    --popover-content-color-background: var(--popover-color-background);  /* Background color for the popover content */
+    --popover-content-border-radius: var(--popover-border-radius);  /* Border radius for the popover content */
+  
+    /* OTHER POPOVER ELEMENTS */
+    /* ========================================================================== */
+  
+    --popover-tooltip-background: var(--popover-color-background);  /* Background color for the tooltip */
+    --popover-tooltip-radius: 0;  /* Radius for the tooltip */
+    --popover-scroll-indicator-bottom-position: 0.45em;  /* Bottom position for scroll indicators */
+    --popover-scrolly-fade-gradient-start-location: 50%;  /* Gradient start location for scrollable fades */
+    --popover-scroll-indicator-padding: calc((var(--popover-padding-content-horizontal) / 2) - (var(--popover-scroll-indicator-width / 2)));  /* Padding for scroll indicator */
+  
+    /* TRANSITIONS */
+    /* ========================================================================== */
+  
+    --popover-transition-default-duration: 0.25s;  /* Default duration for transitions */
+    --popover-scroll-indicator-transition-properties: opacity;  /* Transition properties for scroll indicator */
+    
+    /* Use none for areas you don't want to transition */
+    --popover-transition-properties: opacity, transform;  /* Transition properties for popover */
+    --popover-scroll-indicator-transition-properties: opacity;  /* Transition properties for scroll indicator */
+    --popover-scroll-up-transition-delay: 0.4s;  /* Delay for scrolling up transition */
+    --popover-transition-default-timing-function: ease;  /* Default timing function for transitions */
+
+    --button-height: 0.95em;  /* The total height of the button */
+    --button-width: auto;  /* The total button width (applies only if $button-apply-dimensions is true) */
+    --button-inner-circle-size: 0.25em;  /* Total height/width of the ellipsis circles */
+    --button-border-radius: 0.3em;  /* Border radius on the button itself */
+    --button-left-margin: 0.2em;  /* Margin between the button and the text to its left */
+    --button-right-margin: 0.1em;  /* Margin between the button and the text to its right */
+    --button-vertical-adjust: -0.1em;  /* Pushes the buttons along the vertical axis to align it with text as desired */
+    --button-inner-circle-left-margin: calc(1 * var(--button-inner-circle-size));  /* Space between the ellipsis circles */
+  
+    --button-color: rgb(110, 110, 110);  /* Background color of the button */
+    --button-hovered-color: var(--button-color);  /* Background color of the button when being hovered */
+    --button-activating-color: var(--button-color);  /* Background color of the button when being clicked */
+    --button-active-color: var(--button-color);  /* Background color of the button when active */
+    --button-standard-opacity: 0.2;  /* Opacity for when the button is just sittin' there */
+    --button-hovered-opacity: 0.5;  /* Opacity for when the button is being hovered over */
+    --button-activating-opacity: var(--button-hovered-opacity);  /* Opacity for when the button is being clicked */
+    --button-active-opacity: 1;  /* Opacity for when the button is active */
+    --button-active-style-delay: 0.1s;  /* Delay before applying .active styles; this can be used to match to the popover activation transition */
+  
+    --button-inner-circle-color: white;  /* Background color of the ellipsis circle */
+    --button-inner-circle-border: none;  /* Border of the ellipsis circle */
+  
+    /* OTHER VARIABLES */
+    /* ========================================================================== */
+  
+    --button-total-padding: calc(var(--button-height) - var(--button-inner-circle-size));  /* Total padding for the button */
+    --button-per-side-padding: calc(0.5 * var(--button-total-padding));  /* Padding on each side of the button */
+    --button-transition-properties: background-color;  /* Transition properties for the button */
+  }
+  
