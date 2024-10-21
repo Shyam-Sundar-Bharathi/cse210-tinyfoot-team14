@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(assets/coffee.png); background-size: cover; min-height:100%;">
+<html lang="en" style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(src/assets/coffee.png); background-size: cover; min-height:100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tinyfoot Demo #14: History of Coffee with Footnotes</title>
-    <script src="js/tinyfoot.js"></script>
-    <link rel = "stylesheet" href="styles/tinyfoot.css">
-    <link rel = "stylesheet" href="styles/tinyfoot-variables.css">
-    <!-- FOR NUMERIC FOOTNOTES -->
-    <link rel = "stylesheet" href="styles/Variants/tinyfoot-number.css">
-    <!-- FOR FOOTNOTES AT THE BOTTOM : set `positionContent: false` while initializing TinyFoot object -->
-    <!-- <link rel = "stylesheet" href="styles/Variants/tinyfoot-bottom.css"> -->
+    <script src="src/js/tinyfoot.js"></script>
+    <link rel = "stylesheet" href="src/styles/tinyfoot.css">
+    <link rel = "stylesheet" href="src/styles/tinyfoot-variables.css">
+    <link rel = "stylesheet" href="src/styles/Variants/tinyfoot-number.css">
 
 </head>
 <body>
@@ -38,7 +35,6 @@
             </ol>
         </div>
     <script>
-        //Initializing Tinyfoot Object with properties
         tinyfoot({
             animationDuration: 500,
             activateOnHover: true,

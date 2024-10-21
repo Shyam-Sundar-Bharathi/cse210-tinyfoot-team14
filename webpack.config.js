@@ -1,14 +1,16 @@
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+// const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './src/js/tinyfoot.js', // your main JS file
+    entry: './src/js/tinyfoot.js',
     output: {
-        filename: 'bundle.js',
+        filename: 'tinyfoot.js',
         path: path.resolve(__dirname, 'dist'),
     },
+
 
     module: {
         rules: [
@@ -21,7 +23,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
         ],
     },
@@ -33,7 +35,6 @@ module.exports = {
         }),
     ],
 
-    // change to 'production' for minified output
     optimization: {
         minimize: true,
         minimizer: [
@@ -44,7 +45,9 @@ module.exports = {
                     },
                 },
             }),
-            new CssMinimizerPlugin(),
+            new MiniCssExtractPlugin({
+                filename: '[name].css',
+            }),
         ],
     },
 
