@@ -1,9 +1,3 @@
-import '../styles/tinyfoot.css';
-import '../styles/tinyfoot-variables.css';
-import '../styles/Variants/tinyfoot-bottom.css';
-import '../styles/Variants/tinyfoot-number.css';
-
-
 (function() {
   const tinyfoot = (options) => {
 

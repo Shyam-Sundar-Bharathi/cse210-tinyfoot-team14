@@ -1,14 +1,19 @@
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './src/js/tinyfoot.js',
+    entry: { 
+        tinyfoot: './src/js/tinyfoot.js',
+        tinyfootDefault: './src/js/tinyfootDefault.js',
+        tinyfootNumeric: './src/js/tinyfootNumeric.js',
+        tinyfootBottom: './src/js/tinyfootBottom.js',
+    },
     output: {
-        filename: 'tinyfoot.js',
+        filename: 'js/[name].js',
         path: path.resolve(__dirname, 'dist'),
+        clean: true,
     },
 
 
@@ -29,9 +34,14 @@ module.exports = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html', // Source HTML file
-            filename: 'index.html', // Output HTML file
+        new CopyWebpackPlugin({
+            patterns: [
+              {
+                from: './assets/*', // Copy all files from src/assets
+                to: './', // Copy them to dist/assets
+                context: path.resolve(__dirname, 'src'), // Set context to src
+              },
+            ],
         }),
     ],
 
@@ -44,9 +54,10 @@ module.exports = {
                         drop_console: true, // Optional: Remove console logs
                     },
                 },
+                extractComments: false
             }),
             new MiniCssExtractPlugin({
-                filename: '[name].css',
+                filename: 'styles/[name].css',
             }),
         ],
     },

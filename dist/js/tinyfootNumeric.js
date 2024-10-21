@@ -1,0 +1,7 @@
+(()=>{"use strict";var __webpack_modules__={"./src/js/tinyfootNumeric.js":
+/*!***********************************!*\
+  !*** ./src/js/tinyfootNumeric.js ***!
+  \***********************************/(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{eval('__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_Variants_tinyfoot_number_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/Variants/tinyfoot-number.css */ "./src/styles/Variants/tinyfoot-number.css");\n\n\n//# sourceURL=webpack://tinyfoot/./src/js/tinyfootNumeric.js?')},"./src/styles/Variants/tinyfoot-number.css":
+/*!*************************************************!*\
+  !*** ./src/styles/Variants/tinyfoot-number.css ***!
+  \*************************************************/(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://tinyfoot/./src/styles/Variants/tinyfoot-number.css?")}},__webpack_module_cache__={};function __webpack_require__(_){var e=__webpack_module_cache__[_];if(void 0!==e)return e.exports;var r=__webpack_module_cache__[_]={exports:{}};return __webpack_modules__[_](r,r.exports,__webpack_require__),r.exports}__webpack_require__.r=_=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(_,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(_,"__esModule",{value:!0})};var __webpack_exports__=__webpack_require__("./src/js/tinyfootNumeric.js")})();

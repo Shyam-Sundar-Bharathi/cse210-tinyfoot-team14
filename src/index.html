@@ -7,7 +7,11 @@
     <script src="src/js/tinyfoot.js"></script>
     <link rel = "stylesheet" href="src/styles/tinyfoot.css">
     <link rel = "stylesheet" href="src/styles/tinyfoot-variables.css">
-    <link rel = "stylesheet" href="src/styles/Variants/tinyfoot-number.css">
+     <!-- FOR NUMERIC FOOTNOTES -->
+     <link rel = "stylesheet" href="dist/styles/tinyfootNumeric.css">
+     <!-- FOR FOOTNOTES AT THE BOTTOM : set `positionContent: false` while initializing TinyFoot object -->
+     <!-- <link rel = "stylesheet" href="dist/styles/tinyfootBottom.css"> -->
+ 
 
 </head>
 <body>
@@ -39,7 +43,8 @@
             animationDuration: 500,
             activateOnHover: true,
             deleteOnUnhover: true,
-            showDateAndTime: true
+            showDateAndTime: true,
+            // positionContent: true
         });
     </script>
 </body>

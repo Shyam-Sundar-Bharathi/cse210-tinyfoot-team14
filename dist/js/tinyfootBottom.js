@@ -1,0 +1,7 @@
+(()=>{"use strict";var __webpack_modules__={"./src/js/tinyfootBottom.js":
+/*!**********************************!*\
+  !*** ./src/js/tinyfootBottom.js ***!
+  \**********************************/(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{eval('__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_Variants_tinyfoot_bottom_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/Variants/tinyfoot-bottom.css */ "./src/styles/Variants/tinyfoot-bottom.css");\n\n\n//# sourceURL=webpack://tinyfoot/./src/js/tinyfootBottom.js?')},"./src/styles/Variants/tinyfoot-bottom.css":
+/*!*************************************************!*\
+  !*** ./src/styles/Variants/tinyfoot-bottom.css ***!
+  \*************************************************/(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://tinyfoot/./src/styles/Variants/tinyfoot-bottom.css?")}},__webpack_module_cache__={};function __webpack_require__(_){var e=__webpack_module_cache__[_];if(void 0!==e)return e.exports;var t=__webpack_module_cache__[_]={exports:{}};return __webpack_modules__[_](t,t.exports,__webpack_require__),t.exports}__webpack_require__.r=_=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(_,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(_,"__esModule",{value:!0})};var __webpack_exports__=__webpack_require__("./src/js/tinyfootBottom.js")})();
